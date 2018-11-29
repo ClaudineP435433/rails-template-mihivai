@@ -11,7 +11,7 @@ def add_gems
   gem 'rails', '#{Rails.version}'
   gem 'redis'
   gem 'jquery-rails'
-  gem 'bootstrap', '~> 4.1.1'
+  #gem 'bootstrap', '~> 4.1.1'
   gem 'autoprefixer-rails'
   gem 'font-awesome-sass', '~> 5.0.9'
   gem 'sass-rails'
@@ -318,46 +318,34 @@ YAML
 ########################################
 run 'rm -rf app/assets/stylesheets'
 run 'rm -rf vendor'
-run 'curl -L https://github.com/lewagon/stylesheets/archive/master.zip > stylesheets.zip'
-run 'unzip stylesheets.zip -d app/assets && rm stylesheets.zip && mv app/assets/rails-stylesheets-master app/assets/stylesheets'
-inject_into_file 'app/assets/stylesheets/config/_bootstrap_variables.scss', before: '// Override other variables below!' do
-"
-// Patch to make simple_form compatible with bootstrap 3
-.invalid-feedback {
-  display: none;
-  width: 100%;
-  margin-top: 0.25rem;
-  font-size: 80%;
-  color: $red;
-}
-.was-validated .form-control:invalid,
-.form-control.is-invalid,
-.was-validated .custom-select:invalid,
-.custom-select.is-invalid {
-  border-color: $red;
-}
 
-.was-validated .form-control:invalid ~ .invalid-feedback,
-.was-validated .form-control:invalid ~ .invalid-tooltip,
-.form-control.is-invalid ~ .invalid-feedback,
-.form-control.is-invalid ~ .invalid-tooltip,
-.was-validated .custom-select:invalid ~ .invalid-feedback,
-.was-validated .custom-select:invalid ~ .invalid-tooltip,
-.custom-select.is-invalid ~ .invalid-feedback,
-.custom-select.is-invalid ~ .invalid-tooltip {
-  display: block;
+file 'app/assets/stylesheets/layouts/_index.scss', <<-CSS
+// Import your layouts CSS files here.
+// Examples:
+// @import "dashboard";
+// @import "profile";
+// @import "map";
+CSS
+
+file 'app/assets/stylesheets/components/_alert.scss', <<-CSS
+/* -------------------------------------
+ * Your CSS code for flash notices and alerts
+* ------------------------------------- */
+.alert {
+  margin: 0;
+  text-align: center;
+  color: white;
 }
-"
-end
+.alert-info {
+  background: $green;
+}
+.alert-warning {
+  background: $red;
+}
+CSS
 
-run 'grep -v px app/assets/stylesheets/config/_bootstrap_variables.scss > tmp.txt && mv -f tmp.txt app/assets/stylesheets/config/_bootstrap_variables.scss'
-run "awk '!/bootstrap-sprockets/' app/assets/stylesheets/application.scss > tmp.txt && mv -f tmp.txt app/assets/stylesheets/application.scss"
-run "awk '!/navbar/' app/assets/stylesheets/components/_index.scss > tmp.txt && mv -f tmp.txt app/assets/stylesheets/components/_index.scss"
-
-# run 'cat navbar-mihivai.scss > app/assets/stylesheets/components/_navbar.scss'
 run 'curl -L https://raw.githubusercontent.com/ClaudineP435433/rails-template-mihivai/master/navbar-mihivai.scss > app/assets/stylesheets/components/_navbar.scss'
 run 'curl -L https://raw.githubusercontent.com/ClaudineP435433/rails-template-mihivai/master/footer-mihivai.scss > app/assets/stylesheets/components/_footer.scss'
-
 
 file 'app/assets/stylesheets/components/_utilities.scss', <<-CSS
 .page-min-height {
@@ -365,17 +353,21 @@ file 'app/assets/stylesheets/components/_utilities.scss', <<-CSS
 }
 CSS
 
-inject_into_file 'app/assets/stylesheets/components/_index.scss', before: '@import "alert";' do
-"
+file 'app/assets/stylesheets/components/_index.scss', <<-CSS
+@import "alert";
 @import 'navbar';
 @import 'footer';
 @import 'utilities';
-"
-end
+CSS
 
+file 'app/assets/stylesheets/config/_fonts.scss', <<-CSS
+// Import Google fonts
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,300,700|Raleway:400,100,300,700,500");
+CSS
 
+file 'app/assets/stylesheets/config/_colors.scss', <<-CSS
+CSS
 
-run 'rm app/assets/stylesheets/application.scss'
 file 'app/assets/stylesheets/application.scss', <<-JS
 // Graphical variables
 @import "config/fonts";
@@ -391,6 +383,10 @@ file 'app/assets/stylesheets/application.scss', <<-JS
 @import "components/index";
 @import "pages/index";
 JS
+
+run 'grep -v px app/assets/stylesheets/config/_bootstrap_variables.scss > tmp.txt && mv -f tmp.txt app/assets/stylesheets/config/_bootstrap_variables.scss'
+run "awk '!/bootstrap-sprockets/' app/assets/stylesheets/application.scss > tmp.txt && mv -f tmp.txt app/assets/stylesheets/application.scss"
+run "awk '!/navbar/' app/assets/stylesheets/components/_index.scss > tmp.txt && mv -f tmp.txt app/assets/stylesheets/components/_index.scss"
 
 
 run 'rm app/assets/javascripts/application.js'
@@ -576,10 +572,6 @@ const webpack = require('webpack')
   # Dotenv
   ########################################
   run 'touch .env'
-
-  # Rubocop
-  ########################################
-  run 'curl -L https://raw.githubusercontent.com/lewagon/rails-templates/master/.rubocop.yml > .rubocop.yml'
 
   # Git
   ########################################
