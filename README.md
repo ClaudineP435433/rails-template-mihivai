@@ -28,4 +28,4 @@ Get a rails 5.2+ app ready to be deployed on Heroku with ths following improveme
 
 ```
 To be done
-``
+```
