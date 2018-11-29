@@ -337,10 +337,10 @@ file 'app/assets/stylesheets/components/_alert.scss', <<-CSS
   color: white;
 }
 .alert-info {
-  background: $green;
+  background: #32B796;
 }
 .alert-warning {
-  background: $red;
+  background: #EE5F5B;
 }
 CSS
 
@@ -372,7 +372,7 @@ file 'app/assets/stylesheets/application.scss', <<-JS
 // Graphical variables
 @import "config/fonts";
 @import "config/colors";
-@import "config/bootstrap_variables";
+//@import "config/bootstrap_variables";
 
 // External libraries
 @import "font-awesome-sprockets";
@@ -381,18 +381,13 @@ file 'app/assets/stylesheets/application.scss', <<-JS
 // Your CSS partials
 @import "layouts/index";
 @import "components/index";
-@import "pages/index";
+//@import "pages/index";
 JS
-
-# run 'grep -v px app/assets/stylesheets/config/_bootstrap_variables.scss > tmp.txt && mv -f tmp.txt app/assets/stylesheets/config/_bootstrap_variables.scss'
-# run "awk '!/bootstrap-sprockets/' app/assets/stylesheets/application.scss > tmp.txt && mv -f tmp.txt app/assets/stylesheets/application.scss"
-# run "awk '!/navbar/' app/assets/stylesheets/components/_index.scss > tmp.txt && mv -f tmp.txt app/assets/stylesheets/components/_index.scss"
 
 run 'rm app/assets/javascripts/application.js'
 file 'app/assets/javascripts/application.js', <<-JS
 //= require rails-ujs
 //= require jquery
-//= require popper
 //= require_tree .
 JS
 
@@ -543,7 +538,7 @@ file 'app/views/pages/home.html.erb',
 # Webpacker / Yarn
   ########################################
   run 'rm app/javascript/packs/application.js'
-  run 'yarn add jquery bootstrap --popper.js'
+  run 'yarn add jquery bootstrap popper.js'
 
   file 'app/javascript/packs/application.js', <<-JS
 import 'bootstrap/dist/js/bootstrap';
