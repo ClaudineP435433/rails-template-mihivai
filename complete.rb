@@ -49,6 +49,19 @@ def add_pages_home
 
 HTML
 end
+
+def add_pages_legal
+<<-HTML
+<% content_for(:title) do%>
+  Your Domain - Mentions Legales
+<% end %>
+
+
+<h1>Pages#Legal</h1>
+<p>Find me in app/views/pages/home.html.erb</p>
+
+HTML
+end
 def add_layout
 <<-HTML
 <!DOCTYPE html>
@@ -69,7 +82,7 @@ def add_layout
     <%= render 'shared/navbar' %>
     <%= render 'shared/flashes' %>
     <%= yield %>
-    <%#= render 'shared/footer' %>
+    <%= render 'shared/footer' %>
 
     <script type="application/ld+json">
       {
@@ -245,6 +258,24 @@ def add_navbar
 HTML
 end
 
+def add_footer
+<<-HTML
+<div class="footer d-flex justify-content-between align-items-center">
+  <div class="footer-links">
+  </div>
+  <div class="footer-copyright d-flex flex-column">
+    © 2018 Your Domain
+    <%= link_to legal_path do %>
+      Mentions légales
+    <% end %>
+    <%= link_to "https://www.mihivai.com/", target: "_blank" do %>
+      Site réalisé par Mihivai
+    <% end %>
+  </div>
+</div>
+HTML
+end
+
 run 'pgrep spring | xargs kill -9'
 
 # GEMFILE
@@ -311,10 +342,12 @@ run "awk '!/navbar/' app/assets/stylesheets/components/_index.scss > tmp.txt && 
 
 # run 'cat navbar-mihivai.scss > app/assets/stylesheets/components/_navbar.scss'
 run 'curl -L https://raw.githubusercontent.com/ClaudineP435433/rails-template-mihivai/master/navbar-mihivai.scss > app/assets/stylesheets/components/_navbar.scss'
+run 'curl -L https://raw.githubusercontent.com/ClaudineP435433/rails-template-mihivai/master/footer-mihivai.scss > app/assets/stylesheets/components/_footer.scss'
 
 inject_into_file 'app/assets/stylesheets/components/_index.scss', before: '@import "alert";' do
 "
 @import 'navbar';
+@import 'footer';
 "
 end
 
@@ -359,6 +392,9 @@ file 'app/views/layouts/application.html.erb',
 
 file 'app/views/shared/_flashes.html.erb',
   add_flash
+
+file 'app/views/shared/_footer.html.erb',
+  add_footer
 
 run 'rm public/500.html'
 file 'public/500.html',
@@ -413,6 +449,7 @@ after_bundle do
   # Routes
   ########################################
   route "root to: 'pages#home'"
+  route "get '/legal', to: 'pages#legal', as: 'legal'"
 
   # Git ignore
   ########################################
@@ -465,12 +502,19 @@ class PagesController < ApplicationController
 
   def home
   end
+
+  def legal
+  end
 end
   RUBY
 
 run 'rm app/views/pages/home.html.erb'
 file 'app/views/pages/home.html.erb',
   add_pages_home
+
+run 'rm app/views/pages/home.html.erb'
+file 'app/views/pages/home.html.erb',
+  add_pages_legal
 
   # Environments
   ########################################
