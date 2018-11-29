@@ -44,7 +44,7 @@ def add_pages_home
 <% end %>
 
 <div class="container page-min-height">
-  <h1>Pages#home</h1>
+  <h1>Pages#Home</h1>
   <p>Find me in app/views/pages/home.html.erb</p>
 </div>
 HTML
@@ -58,10 +58,11 @@ def add_pages_legal
 
 <div class="container page-min-height">
   <h1>Pages#Legal</h1>
-  <p>Find me in app/views/pages/home.html.erb</p>
+  <p>Find me in app/views/pages/legal.html.erb</p>
 </div>
 HTML
 end
+
 def add_layout
 <<-HTML
 <!DOCTYPE html>
@@ -516,14 +517,15 @@ class PagesController < ApplicationController
   def legal
   end
 end
-  RUBY
+RUBY
+
+file 'app/views/pages/legal.html.erb',
+  add_pages_legal
 
 run 'rm app/views/pages/home.html.erb'
 file 'app/views/pages/home.html.erb',
   add_pages_home
 
-file 'app/views/pages/legal.html.erb',
-  add_pages_legal
 
   # Environments
   ########################################
