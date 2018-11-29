@@ -355,8 +355,8 @@ CSS
 
 file 'app/assets/stylesheets/components/_index.scss', <<-CSS
 @import "alert";
-@import 'navbar';
 @import 'footer';
+@import 'navbar';
 @import 'utilities';
 CSS
 
@@ -384,9 +384,9 @@ file 'app/assets/stylesheets/application.scss', <<-JS
 @import "pages/index";
 JS
 
-run 'grep -v px app/assets/stylesheets/config/_bootstrap_variables.scss > tmp.txt && mv -f tmp.txt app/assets/stylesheets/config/_bootstrap_variables.scss'
-run "awk '!/bootstrap-sprockets/' app/assets/stylesheets/application.scss > tmp.txt && mv -f tmp.txt app/assets/stylesheets/application.scss"
-run "awk '!/navbar/' app/assets/stylesheets/components/_index.scss > tmp.txt && mv -f tmp.txt app/assets/stylesheets/components/_index.scss"
+# run 'grep -v px app/assets/stylesheets/config/_bootstrap_variables.scss > tmp.txt && mv -f tmp.txt app/assets/stylesheets/config/_bootstrap_variables.scss'
+# run "awk '!/bootstrap-sprockets/' app/assets/stylesheets/application.scss > tmp.txt && mv -f tmp.txt app/assets/stylesheets/application.scss"
+# run "awk '!/navbar/' app/assets/stylesheets/components/_index.scss > tmp.txt && mv -f tmp.txt app/assets/stylesheets/components/_index.scss"
 
 run 'rm app/assets/javascripts/application.js'
 file 'app/assets/javascripts/application.js', <<-JS
