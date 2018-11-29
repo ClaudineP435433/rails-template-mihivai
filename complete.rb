@@ -522,8 +522,7 @@ run 'rm app/views/pages/home.html.erb'
 file 'app/views/pages/home.html.erb',
   add_pages_home
 
-run 'rm app/views/pages/home.html.erb'
-file 'app/views/pages/home.html.erb',
+file 'app/views/pages/legal.html.erb',
   add_pages_legal
 
   # Environments
