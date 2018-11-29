@@ -173,28 +173,26 @@ def update_error_page(var)
       p {
         font-size: 20px;
       }
-      .link_mail_to a {
+      .link_mail_to {
         text-decoration: none;
+        color: #2e2f30ad;
       }
-      .link_mail_to a:hover {
+      .link_mail_to:hover {
         text-decoration: none;
-        color: #2e2f30ad ;
+        color: #2E2F30;
       }
-      .button-green a {
+      .button-green {
         border-radius: 2px;
         margin: 20px 0px;
         text-decoration: none;
         padding: 10px 41px;
         color: white;
-        background-color: #a7a4a5;
+        background-color: #888485;
         font-weight: lighter;
       }
-     .button-green a:hover {
+     .button-green:hover {
         text-decoration: none;
-        background-color: #888485;
-      }
-      .button-green:visited {
-        color: white;
+        background-color: #a7a4a5;
       }
     </style>
   </head>
@@ -224,7 +222,7 @@ def update_error_page(var)
 
   </body>
 </html>
-  HTML
+HTML
 end
 
 def add_navbar
