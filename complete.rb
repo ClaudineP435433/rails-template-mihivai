@@ -37,203 +37,212 @@ def add_gems
   RUBY
 end
 
-def add_users
+def add_pages_home
+<<-HTML
+<% content_for(:title) do%>
+  Your Domain - Home
+<% end %>
+
+
+<h1>Pages#home</h1>
+<p>Find me in app/views/pages/home.html.erb</p>
+
+HTML
+end
+def add_layout
+<<-HTML
+<!DOCTYPE html>
+<html>
+  <head>
+    <%= render "layouts/google_analytics" %>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title><%= yield(:title) || "yourdomain" %></title>
+    <%= csrf_meta_tags %>
+    <%= action_cable_meta_tag %>
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= stylesheet_pack_tag 'bootstrap'%>
+    <%#= stylesheet_pack_tag 'application', media: 'all' %> <!-- Uncomment if you import CSS in app/javascript/packs/application.js -->
+  </head>
+  <body>
+    <%= render 'shared/navbar' %>
+    <%= render 'shared/flashes' %>
+    <%= yield %>
+    <%#= render 'shared/footer' %>
+
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "Organization",
+        "name": "yourdomain",
+        "url": "https://www.yourdomain.com/",
+        "logo": "",
+        "contactPoint": [{
+          "@type": "ContactPoint",
+          "url": "https://www.yourdomain.com",
+          "email": "contact@yourdomain.com",
+          "telephone": "+33-30000000",
+          "contactType": "customer service"
+        }],
+        "image": "",
+        "description": ""
+      }
+    </script>
+    <%= javascript_include_tag 'application' %>
+    <%= javascript_pack_tag 'application' %>
+  </body>
+</html>
+HTML
 end
 
-def add_layout
-  <<-HTML
-  <!DOCTYPE html>
-    <html>
-      <head>
-        <%= render "layouts/google_analytics" %>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-        <title><%= yield(:title) || "yourdomain" %></title>
-        <%= csrf_meta_tags %>
-        <%= action_cable_meta_tag %>
-        <%= stylesheet_link_tag 'application', media: 'all' %>
-        <%= stylesheet_pack_tag 'boostrap'%>
-        <%#= stylesheet_pack_tag 'application', media: 'all' %> <!-- Uncomment if you import CSS in app/javascript/packs/application.js -->
-      </head>
-      <body>
-        <%= render 'shared/navbar' %>
-        <%= render 'shared/flashes' %>
-        <%= yield %>
-        <%#= render 'shared/footer' %>
-
-        <script type="application/ld+json">
-          {
-            "@context": "http://schema.org",
-            "@type": "Organization",
-            "name": "yourdomain",
-            "url": "https://www.yourdomain.com/",
-            "logo": "",
-            "contactPoint": [{
-              "@type": "ContactPoint",
-              "url": "https://www.yourdomain.com",
-              "email": "contact@yourdomain.com",
-              "telephone": "+33-30000000",
-              "contactType": "customer service"
-            }],
-            "image": "",
-            "description": ""
-          }
-        </script>
-        <%= javascript_include_tag 'application' %>
-        <%= javascript_pack_tag 'application' %>
-      </body>
-    </html>
-    HTML
-  end
-
 def add_flash
-  <<-HTML
-    <% if notice %>
-      <div class="alert alert-info alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <%= notice %>
-      </div>
-    <% end %>
-    <% if alert %>
-      <div class="alert alert-warning alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <%= alert %>
-      </div>
-    <% end %>
-  HTML
+<<-HTML
+<% if notice %>
+  <div class="alert alert-info alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <%= notice %>
+  </div>
+<% end %>
+<% if alert %>
+  <div class="alert alert-warning alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <%= alert %>
+  </div>
+<% end %>
+HTML
 end
 
 def add_google_analytics
-  <<-HTML
-    <% if Rails.env == "production"  %>
-      <!-- Global site tag (gtag.js) - Google Analytics -->
-      <script async src="https://www.googletagmanager.com/gtag/js?id=<%= ENV['GOOGLE_ANALYTICS_KEY'] %>"></script>
-      <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', "<%= ENV['GOOGLE_ANALYTICS_KEY'] %>");
-      </script>
-    <% end %>
-  HTML
+<<-HTML
+<% if Rails.env == "production"  %>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=<%= ENV['GOOGLE_ANALYTICS_KEY'] %>"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', "<%= ENV['GOOGLE_ANALYTICS_KEY'] %>");
+  </script>
+<% end %>
+HTML
 end
 
 def update_error_page(var)
-  <<-HTML
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <title>Yourdomain - Erreur</title>
-      <meta name="viewport" content="width=device-width,initial-scale=1">
-      <meta charset="UTF-8">
-      <style>
-        body {
-            background-color: white;
-            color: #2E2F30;
-            text-align: center;
-            font-family: arial, sans-serif;
-          }
+<<-HTML
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Yourdomain - Erreur</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="UTF-8">
+  <style>
+    body {
+        background-color: white;
+        color: #2E2F30;
+        text-align: center;
+        font-family: arial, sans-serif;
+      }
 
-          .banner-logo img {
-            max-width: 90%;
-          }
+      .banner-logo img {
+        max-width: 90%;
+      }
 
-          .container {
-            margin: 100px;
-          }
-          .head-line {
-            font-size: 16px;
-          }
-          .button-green a {
-            text-decoration: none;
-            padding: 10px 41px;
-            color: white;
-            background-color: #4cceb1;
-            font-weight: lighter;
-          }
-         .button-green a:hover {
-            text-decoration: none;
-            color: grey;
-          }
-          .rails-default-error-page {
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-          }
-        </style>
-      </head>
+      .container {
+        margin: 100px;
+      }
+      .head-line {
+        font-size: 16px;
+      }
+      .button-green a {
+        text-decoration: none;
+        padding: 10px 41px;
+        color: white;
+        background-color: #4cceb1;
+        font-weight: lighter;
+      }
+     .button-green a:hover {
+        text-decoration: none;
+        color: grey;
+      }
+      .rails-default-error-page {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+    </style>
+  </head>
 
-      <body class="rails-default-error-page">
-        <!-- This file lives in public/500.html -->
-          <div class="banner-logo">
-            <img src="logo.png" alt="banner">
-          </div>
-          <div class="container">
-            <div class="head-line">
-              <b>Erreur</b>
-            </div>
-            <div class="subheader primary-text-color">
+  <body class="rails-default-error-page">
+    <!-- This file lives in public/500.html -->
+      <div class="banner-logo">
+        <img src="logo.png" alt="banner">
+      </div>
+      <div class="container">
+        <div class="head-line">
+          <b>Erreur</b>
+        </div>
+        <div class="subheader primary-text-color">
 
-              Désolé une erreur est revenue. <br> Veuillez nous excuser pour la gêne occasionée.
-            </div>
-          </div>
-          <div class="button-green">
-            <a class="button-green" href="/#">Retour sur le site</a>
-          </div>
-      </body>
-    </html>
+          Désolé une erreur est revenue. <br> Veuillez nous excuser pour la gêne occasionée.
+        </div>
+      </div>
+      <div class="button-green">
+        <a class="button-green" href="/#">Retour sur le site</a>
+      </div>
+  </body>
+</html>
   HTML
 end
 
 def add_navbar
-  <<-HTML
-    <div class="navbar-mihivai d-flex align-items-center justify-content-between">
-      <!-- Logo -->
-      <%= link_to (image_tag "logo.png", height: 50), root_path %>
+<<-HTML
+<div class="navbar-mihivai d-flex align-items-center justify-content-between">
+  <!-- Logo -->
+  <%= link_to (image_tag "logo.png", height: 50), root_path %>
 
-      <!-- MD & LG Navigation -->
-      <div class="navbar-mihivai-right d-none d-lg-block ">
-        <div class="d-flex align-items-center justify-content-between">
-          <%= link_to "Notre Activité", "/" %>
-          <%= link_to "Nos Services", "/" %>
-          <%= link_to "Contact", "/" %>
+  <!-- MD & LG Navigation -->
+  <div class="navbar-mihivai-right d-none d-lg-block ">
+    <div class="d-flex align-items-center justify-content-between">
+      <%= link_to "Notre Activité", "/" %>
+      <%= link_to "Nos Services", "/" %>
+      <%= link_to "Contact", "/" %>
+      <% if user_signed_in? %>
+        <%= link_to t(".sign_out", default: "Log out"), destroy_user_session_path, method: :delete %>
+      <% else %>
+        <%= link_to t(".sign_in", default: "Login"), new_user_session_path %>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Dropdown list appearing on mobile only -->
+  <div class="navbar-dropdown d-lg-none">
+    <input id="toggle" type="checkbox"/>
+    <label class="hamburger" for="toggle">
+      <div class="top"></div>
+      <div class="meat"></div>
+      <div class="bottom"></div>
+    </label>
+
+    <div class="nav">
+      <div class="nav-wrapper w-100">
+        <nav class="d-flex w-100">
+          <%= link_to "Informations", "/", class: "navbar-link" %>
           <% if user_signed_in? %>
-            <%= link_to t(".sign_out", default: "Log out"), destroy_user_session_path, method: :delete %>
+            <%= link_to "Se Déconnecter", destroy_user_session_path, class: "navbar-link", method: :delete %>
           <% else %>
-            <%= link_to t(".sign_in", default: "Login"), new_user_session_path %>
+            <%= link_to "Créer un Compte", new_user_registration_path, class: "navbar-link" %>
+            <%= link_to "Se Connecter", new_user_session_path,  class: "navbar-link" %>
           <% end %>
-        </div>
-      </div>
-
-      <!-- Dropdown list appearing on mobile only -->
-      <div class="navbar-dropdown d-lg-none">
-        <input id="toggle" type="checkbox"/>
-        <label class="hamburger" for="toggle">
-          <div class="top"></div>
-          <div class="meat"></div>
-          <div class="bottom"></div>
-        </label>
-
-        <div class="nav">
-          <div class="nav-wrapper w-100">
-            <nav class="d-flex w-100">
-              <%= link_to "Informations", "/", class: "navbar-link" %>
-              <% if user_signed_in? %>
-                <%= link_to "Se Déconnecter", destroy_user_session_path, class: "navbar-link", method: :delete %>
-              <% else %>
-                <%= link_to "Créer un Compte", new_user_registration_path, class: "navbar-link" %>
-                <%= link_to "Se Connecter", new_user_session_path,  class: "navbar-link" %>
-              <% end %>
-            </nav>
-          </div>
-        </div>
+        </nav>
       </div>
     </div>
-  HTML
+  </div>
+</div>
+HTML
 end
 
 run 'pgrep spring | xargs kill -9'
@@ -383,10 +392,10 @@ file 'README.md', markdown_file_content, force: true
 ########################################
 generators = <<-RUBY
 config.generators do |generate|
-      generate.assets false
-      generate.helper false
-      generate.test_framework  :test_unit, fixture: false
-    end
+  generate.assets false
+  generate.helper false
+  generate.test_framework  :test_unit, fixture: false
+end
 RUBY
 
 environment generators
@@ -434,13 +443,13 @@ after_bundle do
 
   # App controller
   ########################################
-  run 'rm app/controllers/application_controller.rb'
-  file 'app/controllers/application_controller.rb', <<-RUBY
-    class ApplicationController < ActionController::Base
-      protect_from_forgery with: :exception
-      before_action :authenticate_user!
-    end
-  RUBY
+run 'rm app/controllers/application_controller.rb'
+file 'app/controllers/application_controller.rb', <<-RUBY
+class ApplicationController < ActionController::Base
+  protect_from_forgery with: :exception
+  before_action :authenticate_user!
+end
+RUBY
 
   # migrate + devise views
   ########################################
@@ -451,13 +460,17 @@ after_bundle do
   ########################################
   run 'rm app/controllers/pages_controller.rb'
   file 'app/controllers/pages_controller.rb', <<-RUBY
-  class PagesController < ApplicationController
-    skip_before_action :authenticate_user!, only: [:home]
+class PagesController < ApplicationController
+  skip_before_action :authenticate_user!, only: [:home]
 
-    def home
-    end
+  def home
   end
+end
   RUBY
+
+run 'rm app/views/pages/home.html.erb'
+file 'app/views/pages/home.html.erb',
+  add_pages_home
 
   # Environments
   ########################################
@@ -470,25 +483,25 @@ after_bundle do
   run 'yarn add jquery bootstrap --popper.js'
 
   file 'app/javascript/packs/application.js', <<-JS
-    import 'bootstrap/dist/js/bootstrap';
-    import "bootstrap";
+import 'bootstrap/dist/js/bootstrap';
+import "bootstrap";
   JS
 
   file 'app/javascript/packs/bootstrap.scss', <<-CSS
-    @import "~bootstrap/scss/bootstrap";
+@import "~bootstrap/scss/bootstrap";
   CSS
 
   inject_into_file 'config/webpack/environment.js', before: 'module.exports' do
   <<-JS
   // Bootstrap 3 has a dependency over jQuery:
-  const webpack = require('webpack')
+const webpack = require('webpack')
   environment.plugins.prepend('Provide',
-    new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery',
-      Popper: ['popper.js', 'default']
-    })
-  )
+  new webpack.ProvidePlugin({
+    $: 'jquery',
+    jQuery: 'jquery',
+    Popper: ['popper.js', 'default']
+  })
+)
   JS
   end
 
