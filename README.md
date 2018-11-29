@@ -8,7 +8,8 @@ using [Rails Templates](http://guides.rubyonrails.org/rails_application_template
 ```bash
 rails new \
   --database postgresql \
-  -m https://raw.githubusercontent.com/Joz84/rails-templates/master/complete.rb \
+  --webpack \
+  -m https://raw.githubusercontent.com/ClaudineP435433/rails-template-mihivai/master/complete.rb \
   CHANGE_THIS_TO_YOUR_RAILS_APP_NAME
 ```
 

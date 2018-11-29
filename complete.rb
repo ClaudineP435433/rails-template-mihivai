@@ -14,7 +14,7 @@ def add_gems
   gem 'bootstrap', '~> 4.1.1'
   gem 'autoprefixer-rails'
   gem 'font-awesome-sass', '~> 5.0.9'
-  gem 'sassc-rails'
+  gem 'sass-rails'
   gem 'simple_form'
   gem 'uglifier'
   gem 'webpacker'
@@ -53,6 +53,7 @@ def add_layout
         <%= csrf_meta_tags %>
         <%= action_cable_meta_tag %>
         <%= stylesheet_link_tag 'application', media: 'all' %>
+        <%= stylesheet_pack_tag 'boostrap'%>
         <%#= stylesheet_pack_tag 'application', media: 'all' %> <!-- Uncomment if you import CSS in app/javascript/packs/application.js -->
       </head>
       <body>
@@ -301,14 +302,35 @@ run "awk '!/navbar/' app/assets/stylesheets/components/_index.scss > tmp.txt && 
 
 run 'cat navbar-mihivai.sccs > app/assets/stylesheets/components/_navbar.scss'
 
+run 'rm app/assets/stylesheets//application.scss'
+file 'app/assets/stylesheets//application.scss', <<-JS
+// Graphical variables
+@import "config/fonts";
+@import "config/colors";
+@import "config/bootstrap_variables";
+
+// External libraries
+@import "font-awesome-sprockets";
+@import "font-awesome";
+
+// Your CSS partials
+@import "layouts/index";
+@import "components/index";
+@import "pages/index";
+JS
+
+
 run 'rm app/assets/javascripts/application.js'
 file 'app/assets/javascripts/application.js', <<-JS
 //= require rails-ujs
-//= require jquery3
+//= require jquery
 //= require popper
-//= require bootstrap-sprockets
 //= require_tree .
 JS
+
+file 'app/assets/javascripts/bootstrap.sccs', <<-CSS
+  @import "~bootstrap/scss/bootstrap";
+CSS
 
 # Dev environment
 ########################################
@@ -440,8 +462,9 @@ after_bundle do
 # Webpacker / Yarn
   ########################################
   run 'rm app/javascript/packs/application.js'
-  run 'yarn add jquery bootstrap@3'
+  run 'yarn add jquery bootstrap --popper.js'
   file 'app/javascript/packs/application.js', <<-JS
+    import 'bootstrap/dist/js/bootstrap';
     import "bootstrap";
   JS
 
@@ -452,7 +475,8 @@ after_bundle do
     environment.plugins.prepend('Provide',
       new webpack.ProvidePlugin({
         $: 'jquery',
-        jQuery: 'jquery'
+        jQuery: 'jquery',
+        Popper: ['popper.js', 'default']
       })
     )
     JS
