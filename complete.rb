@@ -156,6 +156,7 @@ def update_error_page(var)
         color: #2E2F30;
         text-align: center;
         font-family: arial, sans-serif;
+        margin: 20px;
       }
 
       .banner-logo img {
@@ -163,29 +164,37 @@ def update_error_page(var)
       }
 
       .container {
-        margin: 100px;
+        margin: 40px auto;
       }
-      .head-line {
-        font-size: 16px;
+      h1 {
+        font-size: 32px;
+        margin: 0px;
+      }
+      p {
+        font-size: 20px;
+      }
+      .link_mail_to a {
+        text-decoration: none;
+      }
+      .link_mail_to a:hover {
+        text-decoration: none;
+        color: #2e2f30ad ;
       }
       .button-green a {
+        border-radius: 2px;
+        margin: 20px 0px;
         text-decoration: none;
         padding: 10px 41px;
         color: white;
-        background-color: #4cceb1;
+        background-color: #a7a4a5;
         font-weight: lighter;
       }
      .button-green a:hover {
         text-decoration: none;
-        color: grey;
+        background-color: #888485;
       }
-      .rails-default-error-page {
-        width: 100vw;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
+      .button-green:visited {
+        color: white;
       }
     </style>
   </head>
@@ -193,20 +202,26 @@ def update_error_page(var)
   <body class="rails-default-error-page">
     <!-- This file lives in public/500.html -->
       <div class="banner-logo">
-        <img src="logo.png" alt="banner">
+        <img src="logo.png" alt="logo">
       </div>
       <div class="container">
-        <div class="head-line">
-          <b>Erreur</b>
-        </div>
-        <div class="subheader primary-text-color">
+        <h1>
+          Page d'erreur
+        </h1>
+        <p>
+          Une erreur est revenue. <br> Veuillez nous excuser pour la gêne occasionée.
+        </p>
+         <p>
+          N'hésitez pas à retourner sur la page précédente et à réessayer.
+        </p>
+        <p>
+          <a class="link_mail_to" href="mailto:contact@mihivai.com">Reporter le probléme</a>
+        </p>
+      </div>
+      <div class="container">
+        <a class="button-green" href="/">Retour sur le site</a>
+      </div>
 
-          Désolé une erreur est revenue. <br> Veuillez nous excuser pour la gêne occasionée.
-        </div>
-      </div>
-      <div class="button-green">
-        <a class="button-green" href="/#">Retour sur le site</a>
-      </div>
   </body>
 </html>
   HTML
