@@ -1,0 +1,251 @@
+/* Main navbar */
+.navbar-mihivai {
+  box-shadow: 0 1px 5px 0 rgba(0,0,0,0.07),0 1px 0 0 rgba(0,0,0,0.03);
+  background: white;
+  transition: all 0.3s ease;
+  height: 70px;
+  padding: 0px 30px;
+  color: #60626d;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+/* Logo */
+.navbar-mihivai-brand {
+  h2 {
+    font-size: 40px;
+    font-weight: normal;
+  }
+  h6 {
+    font-size: 24px;
+  }
+  p {
+    font-size: 10px;
+  }
+  img {
+    height: 50px;
+  }
+}
+/* Right section */
+.navbar-mihivai-right a {
+  text-decoration: none;
+  color: #60626d;
+  cursor: pointer;
+  padding: 0 20px;
+  font-size: 14px;
+  &:hover {
+    color: green;
+    text-decoration: none;
+  }
+}
+/* Dropdown menu */
+.navbar-mihivai-dropdown-menu {
+  box-shadow: 1px 1px 4px #616668;
+  a {
+    text-decoration: none;
+    color: #616668 !important;
+    line-height: 22px !important;
+    padding: 10px 20px;
+    &:hover {
+      text-decoration: none;
+      color: green !important;
+    }
+  }
+}
+.navbar-mihivai-dropdown-menu:before {
+  content: ' ';
+  height: 10px;
+  width: 10px;
+  position: absolute;
+  right: 10px;
+  top: -6px;
+  background-color: white;
+  transform: rotate(45deg);
+  border-left: 1px solid #E6E6E6;
+  border-top: 1px solid #E6E6E6;
+}
+
+.navbar-dropdown {
+  flex: 0 1 auto;
+  cursor: pointer;
+  padding: 0 10px;
+  text-decoration: none;
+  color: grey;
+}
+.navbar-dropdown-menu {
+  margin-top: 15px;
+  border-color: #E6E6E6;
+}
+.navbar-dropdown-menu > a {
+  transition: color 0.3s ease;
+  font-weight: lighter !important;
+  color: grey !important;
+  font-size: 10px !important;
+  line-height: 22px !important;
+  padding: 0px 15px;
+  display: flex;
+}
+.navbar-dropdown-menu > a:hover {
+  background: transparent !important;
+  color: black !important;
+}
+.navbar-dropdown-menu:before {
+  content: ' ';
+  height: 10px;
+  width: 10px;
+  position: absolute;
+  right: 10px;
+  top: -6px;
+  background-color: grey;
+  transform: rotate(45deg);
+  border-left: 1px solid #E6E6E6;
+  border-top: 1px solid #E6E6E6;
+}
+
+
+
+/* Hamburger Styling */
+.hamburger {
+  position: absolute;
+  width: 30px;
+  height: 25px;
+  top: 15px;
+  right: 15px;
+  z-index: 5;
+}
+
+.hamburger div {
+  position: relative;
+  width: 30px;
+  height: 2px;
+
+  background-color: #d2d2d2;
+  margin-top: 7px;
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+}
+
+#toggle {
+  display: none;
+}
+
+/* Hamburger Animation */
+#toggle:checked + .hamburger .top {
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+  margin-top: 22.5px;
+}
+
+#toggle:checked + .hamburger .meat {
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+  margin-top: -2px;
+}
+
+#toggle:checked + .hamburger .bottom {
+  -webkit-transform: scale(0);
+          transform: scale(0);
+}
+
+#toggle:checked + .hamburger + .nav {
+  top: 0;
+}
+
+/* Menu Styling */
+.nav {
+  z-index: 1;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(61, 61, 61, 0.9);
+  top: -100%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.nav .nav-wrapper {
+  position: relative;
+  z-index: 500;
+  overflow-y: auto;
+  height: 100%;
+}
+
+nav {
+  font-family: "Circular-Medium, Circular";
+  height: 100vh;
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+nav a {
+  width: 100%;
+  padding: 10px 0;
+  margin-top: 15px;
+  color: #eee;
+  opacity: 0;
+  text-decoration: none;
+  font-size: 2.3em;
+  letter-spacing: 3px;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+nav a:hover {
+  color: grey;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+nav a:first-child {
+  margin-top: 0;
+}
+
+/* Dropdown Animation */
+#toggle:checked + .hamburger + .nav .nav-wrapper nav a {
+  opacity: 0.9;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+
+.navbar-link {
+  flex: 0 1 auto;
+  cursor: pointer;
+  padding: 0 10px;
+  text-decoration: none;
+  color: white;
+  font-size: 12px;
+  @media (max-width: 768px){
+    font-size: 20px;
+    font-family: "Lora", "serif";
+  }
+}
+.navbar-link:hover {
+  color: yellow;
+  text-decoration: none;
+}
+.navbar-link:visited {
+  outline: 0;
+  color: white;
+  text-decoration: none;
+}
+.navbar-link:focus {
+  color: white;
+  outline: 0;
+  text-decoration: none;
+}
