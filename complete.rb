@@ -43,10 +43,10 @@ def add_pages_home
   Your Domain - Home
 <% end %>
 
-
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
-
+<div class="container page-min-height">
+  <h1>Pages#home</h1>
+  <p>Find me in app/views/pages/home.html.erb</p>
+</div>
 HTML
 end
 
@@ -56,10 +56,10 @@ def add_pages_legal
   Your Domain - Mentions Legales
 <% end %>
 
-
-<h1>Pages#Legal</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
-
+<div class="container page-min-height">
+  <h1>Pages#Legal</h1>
+  <p>Find me in app/views/pages/home.html.erb</p>
+</div>
 HTML
 end
 def add_layout
@@ -344,12 +344,22 @@ run "awk '!/navbar/' app/assets/stylesheets/components/_index.scss > tmp.txt && 
 run 'curl -L https://raw.githubusercontent.com/ClaudineP435433/rails-template-mihivai/master/navbar-mihivai.scss > app/assets/stylesheets/components/_navbar.scss'
 run 'curl -L https://raw.githubusercontent.com/ClaudineP435433/rails-template-mihivai/master/footer-mihivai.scss > app/assets/stylesheets/components/_footer.scss'
 
+
+file 'app/assets/stylesheets/components/_utilities.scss', <<-CSS
+.page-min-height {
+  min-height: calc(100vh - 170px)
+}
+CSS
+
 inject_into_file 'app/assets/stylesheets/components/_index.scss', before: '@import "alert";' do
 "
 @import 'navbar';
 @import 'footer';
+@import 'utilities';
 "
 end
+
+
 
 run 'rm app/assets/stylesheets/application.scss'
 file 'app/assets/stylesheets/application.scss', <<-JS
@@ -498,7 +508,7 @@ RUBY
   run 'rm app/controllers/pages_controller.rb'
   file 'app/controllers/pages_controller.rb', <<-RUBY
 class PagesController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:home]
+  skip_before_action :authenticate_user!, only: [:home, :legal]
 
   def home
   end
