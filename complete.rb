@@ -60,7 +60,7 @@ def add_layout
         <%= render 'shared/navbar' %>
         <%= render 'shared/flashes' %>
         <%= yield %>
-        <%= render 'shared/footer' %>
+        <%#= render 'shared/footer' %>
 
         <script type="application/ld+json">
           {
@@ -124,7 +124,7 @@ def update_error_page(var)
     <!DOCTYPE html>
     <html>
     <head>
-      <title><%= "Yourdomain - Error #{var}" %></title>
+      <title>Yourdomain - Erreur</title>
       <meta name="viewport" content="width=device-width,initial-scale=1">
       <meta charset="UTF-8">
       <style>
@@ -170,11 +170,11 @@ def update_error_page(var)
       <body class="rails-default-error-page">
         <!-- This file lives in public/500.html -->
           <div class="banner-logo">
-            <img src="banner.png" alt="banner">
+            <img src="logo.png" alt="banner">
           </div>
           <div class="container">
             <div class="head-line">
-              <b>Erreur <%= var %></b>
+              <b>Erreur</b>
             </div>
             <div class="subheader primary-text-color">
 
@@ -300,10 +300,17 @@ run 'grep -v px app/assets/stylesheets/config/_bootstrap_variables.scss > tmp.tx
 run "awk '!/bootstrap-sprockets/' app/assets/stylesheets/application.scss > tmp.txt && mv -f tmp.txt app/assets/stylesheets/application.scss"
 run "awk '!/navbar/' app/assets/stylesheets/components/_index.scss > tmp.txt && mv -f tmp.txt app/assets/stylesheets/components/_index.scss"
 
-run 'cat navbar-mihivai.sccs > app/assets/stylesheets/components/_navbar.scss'
+# run 'cat navbar-mihivai.scss > app/assets/stylesheets/components/_navbar.scss'
+run 'curl -L https://raw.githubusercontent.com/ClaudineP435433/rails-template-mihivai/master/navbar-mihivai.scss > app/assets/stylesheets/components/_navbar.scss'
 
-run 'rm app/assets/stylesheets//application.scss'
-file 'app/assets/stylesheets//application.scss', <<-JS
+inject_into_file 'app/assets/stylesheets/components/_index.scss', before: '@import "alert";' do
+"
+@import 'navbar';
+"
+end
+
+run 'rm app/assets/stylesheets/application.scss'
+file 'app/assets/stylesheets/application.scss', <<-JS
 // Graphical variables
 @import "config/fonts";
 @import "config/colors";
@@ -328,7 +335,7 @@ file 'app/assets/javascripts/application.js', <<-JS
 //= require_tree .
 JS
 
-file 'app/assets/javascripts/bootstrap.sccs', <<-CSS
+file 'app/javascripts/packs/bootstrap.scss', <<-CSS
   @import "~bootstrap/scss/bootstrap";
 CSS
 
@@ -348,23 +355,25 @@ file 'app/views/layouts/application.html.erb',
 file 'app/views/shared/_flashes.html.erb',
   add_flash
 
-run 'rm public/500.html.erb'
-file 'public/500.html.erb',
+run 'rm public/500.html'
+file 'public/500.html',
   update_error_page(500)
 
-run 'rm public/404.html.erb'
-file 'public/404.html.erb',
+run 'rm public/404.html'
+file 'public/404.html',
   update_error_page(404)
 
-run 'rm public/422.html.erb'
-file 'public/422.html.erb',
+run 'rm public/422.html'
+file 'public/422.html',
   update_error_page(422)
 
 
 file 'app/views/shared/_navbar.html.erb',
   add_navbar
 
+
 run 'curl -L https://raw.githubusercontent.com/Joz84/rails-templates/master/logo.png > app/assets/images/logo.png'
+run 'curl -L https://raw.githubusercontent.com/Joz84/rails-templates/master/logo.png > public/logo.png'
 
 
 # README
