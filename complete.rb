@@ -335,10 +335,6 @@ file 'app/assets/javascripts/application.js', <<-JS
 //= require_tree .
 JS
 
-file 'app/javascripts/packs/bootstrap.scss', <<-CSS
-  @import "~bootstrap/scss/bootstrap";
-CSS
-
 # Dev environment
 ########################################
 gsub_file('config/environments/development.rb', /config\.assets\.debug.*/, 'config.assets.debug = false')
@@ -472,23 +468,28 @@ after_bundle do
   ########################################
   run 'rm app/javascript/packs/application.js'
   run 'yarn add jquery bootstrap --popper.js'
+
   file 'app/javascript/packs/application.js', <<-JS
     import 'bootstrap/dist/js/bootstrap';
     import "bootstrap";
   JS
 
-    inject_into_file 'config/webpack/environment.js', before: 'module.exports' do
-    <<-JS
-    // Bootstrap 3 has a dependency over jQuery:
-    const webpack = require('webpack')
-    environment.plugins.prepend('Provide',
-      new webpack.ProvidePlugin({
-        $: 'jquery',
-        jQuery: 'jquery',
-        Popper: ['popper.js', 'default']
-      })
-    )
-    JS
+  file 'app/javascript/packs/bootstrap.scss', <<-CSS
+    @import "~bootstrap/scss/bootstrap";
+  CSS
+
+  inject_into_file 'config/webpack/environment.js', before: 'module.exports' do
+  <<-JS
+  // Bootstrap 3 has a dependency over jQuery:
+  const webpack = require('webpack')
+  environment.plugins.prepend('Provide',
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+      Popper: ['popper.js', 'default']
+    })
+  )
+  JS
   end
 
   # Dotenv
