@@ -227,48 +227,54 @@ end
 
 def add_navbar
 <<-HTML
-<div class="navbar-mihivai d-flex align-items-center justify-content-between">
+<div class="navbar-mihivai">
   <!-- Logo -->
-  <%= link_to (image_tag "logo.png", height: 50), root_path %>
+  <a href="/" class="navbar-mihivai-brand">
+    <%= image_tag "logo.png" %>
+  </a>
 
-  <!-- MD & LG Navigation -->
-  <div class="navbar-mihivai-right d-none d-lg-block ">
+  <div class="d-none d-md-block">
     <div class="d-flex align-items-center justify-content-between">
-      <%= link_to "Notre Activité", "/" %>
-      <%= link_to "Nos Services", "/" %>
-      <%= link_to "Contact", "/" %>
+      <%= link_to "Notre Activité", "#", class: "navbar-mihivai-item navbar-mihivai-link" %>
+      <%= link_to "Nos Services", "/", class: "navbar-mihivai-item navbar-mihivai-link" %>
+      <%= link_to "Contact", "/", class: "navbar-mihivai-item navbar-mihivai-link" %>
       <% if user_signed_in? %>
-        <%= link_to t(".sign_out", default: "Log out"), destroy_user_session_path, method: :delete %>
+        <%= link_to t(".sign_out", default: "Log out"), destroy_user_session_path, method: :delete , class: "navbar-mihivai-item navbar-mihivai-link"%>
       <% else %>
-        <%= link_to t(".sign_in", default: "Login"), new_user_session_path %>
+        <%= link_to t(".sign_in", default: "Login"), new_user_session_path , class: "navbar-mihivai-item navbar-mihivai-link"%>
       <% end %>
     </div>
   </div>
 
-  <!-- Dropdown list appearing on mobile only -->
-  <div class="navbar-dropdown d-lg-none">
-    <input id="toggle" type="checkbox"/>
-    <label class="hamburger" for="toggle">
-      <div class="top"></div>
-      <div class="meat"></div>
-      <div class="bottom"></div>
-    </label>
+  <div class="d-block d-md-none">
+    <div class="navbar-dropdown">
+      <input id="toggle" type="checkbox"/>
+      <label class="hamburger" for="toggle">
+        <div class="top"></div>
+        <div class="meat"></div>
+        <div class="bottom"></div>
+      </label>
 
-    <div class="nav">
-      <div class="nav-wrapper w-100">
-        <nav class="d-flex w-100">
-          <%= link_to "Informations", "/", class: "navbar-link" %>
-          <% if user_signed_in? %>
-            <%= link_to "Se Déconnecter", destroy_user_session_path, class: "navbar-link", method: :delete %>
-          <% else %>
-            <%= link_to "Créer un Compte", new_user_registration_path, class: "navbar-link" %>
-            <%= link_to "Se Connecter", new_user_session_path,  class: "navbar-link" %>
-          <% end %>
-        </nav>
+      <div class="nav">
+        <div class="nav-wrapper">
+          <nav class= "d-flex flex-column">
+            <%= link_to "Accueil", root_path, class: "navbar-link" %>
+            <% if user_signed_in? %>
+              <%= link_to "Se Déconnecter", destroy_user_session_path, class: "navbar-link", method: :delete %>
+            <% else %>
+              <%= link_to "Créer un Compte", new_user_registration_path, class: "navbar-link" %>
+              <%= link_to "Se Connecter", new_user_session_path,  class: "navbar-link" %>
+            <% end %>
+          </nav>
+        </div>
       </div>
     </div>
+
   </div>
 </div>
+
+<div style="height: 70px;"></div>
+
 HTML
 end
 
