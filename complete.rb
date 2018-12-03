@@ -571,13 +571,8 @@ const webpack = require('webpack')
 
   # Dotenv
   ########################################
-  #run 'touch .env'
-  file '.env', <<-KEY
-STRIPE_PUBLISHABLE_KEY=pk_test_f5GH45bDCvLIqEOmFHRJkiRY
-STRIPE_SECRET_KEY=sk_**f
-GOOGLE_ANALYTICS_KEY=
-YOURDOMAIN=
-KEY
+  run 'touch .env'
+  #file '.env'
 
   # Git
   ########################################
