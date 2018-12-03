@@ -40,7 +40,7 @@ end
 def add_pages_home
 <<-HTML
 <% content_for(:title) do%>
-  <%= ENV['YOURDOMAIN'] %> - Accueil
+  Yourdomain - Accueil
 <% end %>
 
 <div class="container page-min-height">
@@ -53,7 +53,7 @@ end
 def add_pages_legal
 <<-HTML
 <% content_for(:title) do%>
-  <%= ENV['YOURDOMAIN'] %> - Mentions Legales
+  Yourdomain - Mentions Legales
 <% end %>
 
 <div class="container page-min-height">
@@ -72,7 +72,7 @@ def add_layout
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title><%= yield(:title) || ENV['YOURDOMAIN'] %></title>
+    <title><%= yield(:title) || Yourdomain %></title>
     <%= csrf_meta_tags %>
     <%= action_cable_meta_tag %>
     <%= stylesheet_link_tag 'application', media: 'all' %>
@@ -475,22 +475,22 @@ after_bundle do
   ########################################
   run 'rm .gitignore'
   file '.gitignore', <<-TXT
-  .bundle
-  log/*.log
-  tmp/**/*
-  tmp/*
-  !log/.keep
-  !tmp/.keep
-  *.swp
-  .DS_Store
-  public/assets
-  public/packs
-  public/packs-test
-  node_modules
-  yarn-error.log
-  .byebug_history
-  .env*
-  TXT
+.bundle
+log/*.log
+tmp/**/*
+tmp/*
+!log/.keep
+!tmp/.keep
+*.swp
+.DS_Store
+public/assets
+public/packs
+public/packs-test
+node_modules
+yarn-error.log
+.byebug_history
+.env*
+TXT
 
 
   # Devise install + user
