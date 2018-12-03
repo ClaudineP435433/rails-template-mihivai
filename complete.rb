@@ -147,7 +147,7 @@ def update_error_page(var)
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%= ENV['YOURDOMAIN'] %> - Erreur</title>
+  <title> Yourdomain - Erreur</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta charset="UTF-8">
   <style>
