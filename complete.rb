@@ -40,7 +40,7 @@ end
 def add_pages_home
 <<-HTML
 <% content_for(:title) do%>
-  Your Domain - Home
+  <%= ENV['YOURDOMAIN'] %> - Accueil
 <% end %>
 
 <div class="container page-min-height">
@@ -53,7 +53,7 @@ end
 def add_pages_legal
 <<-HTML
 <% content_for(:title) do%>
-  Your Domain - Mentions Legales
+  <%= ENV['YOURDOMAIN'] %> - Mentions Legales
 <% end %>
 
 <div class="container page-min-height">
@@ -72,7 +72,7 @@ def add_layout
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title><%= yield(:title) || "yourdomain" %></title>
+    <title><%= yield(:title) || ENV['YOURDOMAIN'] %></title>
     <%= csrf_meta_tags %>
     <%= action_cable_meta_tag %>
     <%= stylesheet_link_tag 'application', media: 'all' %>
@@ -147,7 +147,7 @@ def update_error_page(var)
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Yourdomain - Erreur</title>
+  <title><%= ENV['YOURDOMAIN'] %> - Erreur</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta charset="UTF-8">
   <style>
@@ -571,7 +571,13 @@ const webpack = require('webpack')
 
   # Dotenv
   ########################################
-  run 'touch .env'
+  #run 'touch .env'
+  file '.env', <<-KEY
+STRIPE_PUBLISHABLE_KEY=pk_test_f5GH45bDCvLIqEOmFHRJkiRY
+STRIPE_SECRET_KEY=sk_**f
+GOOGLE_ANALYTICS_KEY=
+YOURDOMAIN=
+KEY
 
   # Git
   ########################################
