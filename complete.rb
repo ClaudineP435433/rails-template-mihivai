@@ -557,7 +557,7 @@ file 'config/meta.yml', <<-YAML
 meta_product_name: "Product Name"
 meta_title: "Product name - Product tagline"
 meta_description: "Relevant description"
-meta_image: "cover.png" # should exist in `app/assets/images/`
+meta_image: "logo.png" # should exist in `app/assets/images/`
 YAML
 
 file 'config/initializers/default_meta.rb', <<-RUBY
