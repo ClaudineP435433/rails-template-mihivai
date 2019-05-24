@@ -38,9 +38,7 @@ end
 
 def add_pages_home
 <<-HTML
-<% content_for(:title) do%>
-  Yourdomain - Accueil
-<% end %>
+<%= content_for :meta_title, "Yourdomain - Your Meta" %>
 
 <div class="container page-min-height">
   <h1>Pages#Home</h1>
@@ -51,8 +49,8 @@ end
 
 def add_pages_legal
 <<-HTML
-<% content_for(:title) do%>
-  Yourdomain - Mentions Legales
+<% content_for(:robots) do %>
+  <meta name="robots" content='noindex, nofollow'>
 <% end %>
 
 <div class="container page-min-height">
@@ -71,7 +69,17 @@ def add_layout
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title><%= yield(:title) || Yourdomain %></title>
+    <title><%= meta_title %></title>
+    <meta name="description" content="<%= meta_description %>">
+    <!-- Facebook Open Graph data -->
+    <meta property="og:title" content="<%= meta_title %>" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="<%= request.original_url %>" />
+    <meta property="og:image" content="<%= meta_image %>" />
+    <meta property="og:description" content="<%= meta_description %>" />
+    <meta property="og:site_name" content="<%= meta_title %>" />
+
+    <%= yield(:robots) %>
     <%= csrf_meta_tags %>
     <%= action_cable_meta_tag %>
     <%= stylesheet_link_tag 'application', media: 'all' %>
@@ -508,6 +516,9 @@ file 'app/controllers/application_controller.rb', <<-RUBY
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :authenticate_user!
+  def default_url_options
+    { host: ENV["DOMAIN"] || "localhost:3000" }
+  end
 end
 RUBY
 
@@ -538,6 +549,43 @@ run 'rm app/views/pages/home.html.erb'
 file 'app/views/pages/home.html.erb',
   add_pages_home
 
+
+ # Creation des Meta
+  ########################################
+
+file 'config/meta.yml', <<-YAML
+meta_product_name: "Product Name"
+meta_title: "Product name - Product tagline"
+meta_description: "Relevant description"
+meta_image: "cover.png" # should exist in `app/assets/images/`
+YAML
+
+file 'config/initializers/default_meta.rb', <<-RUBY
+DEFAULT_META = YAML.load_file(Rails.root.join("config/meta.yml"))
+RUBY
+
+
+file 'app/helpers/meta_tags_helper.rb', <<-RUBY
+module MetaTagsHelper
+  def meta_title
+    content_for?(:meta_title) ? content_for(:meta_title) : DEFAULT_META["meta_title"]
+  end
+
+  def meta_description
+    content_for?(:meta_description) ? content_for(:meta_description) : DEFAULT_META["meta_description"]
+  end
+
+  def meta_image
+    meta_image = (content_for?(:meta_image) ? content_for(:meta_image) : DEFAULT_META["meta_image"])
+    # little twist to make it work equally with an asset or a url
+    meta_image.starts_with?("http") ? meta_image : image_url(meta_image)
+  end
+
+  # def meta_keywords
+  #   content_for?(:meta_keywords) ? content_for(:meta_keywords) : DEFAULT_META["meta_keywords"]
+  # end
+end
+RUBY
 
   # Environments
   ########################################
