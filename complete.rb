@@ -32,7 +32,6 @@ def add_gems
     gem 'spring'
     gem 'spring-watcher-listen', '~> 2.0.0'
     gem 'dotenv-rails'
-    gem 'spring-watcher-listen', '~> 2.0.0'
   end
   RUBY
 end
@@ -76,7 +75,7 @@ def add_layout
     <%= csrf_meta_tags %>
     <%= action_cable_meta_tag %>
     <%= stylesheet_link_tag 'application', media: 'all' %>
-    <%= stylesheet_pack_tag 'bootstrap'%>
+    <%#= stylesheet_pack_tag 'bootstrap'%>
     <%#= stylesheet_pack_tag 'application', media: 'all' %> <!-- Uncomment if you import CSS in app/javascript/packs/application.js -->
   </head>
   <body>
@@ -374,13 +373,17 @@ CSS
 file 'app/assets/stylesheets/config/_colors.scss', <<-CSS
 CSS
 
+file 'app/assets/stylesheets/config/_bootstrap_variables.scss', <<-CSS
+CSS
+
 file 'app/assets/stylesheets/application.scss', <<-JS
 // Graphical variables
 @import "config/fonts";
 @import "config/colors";
-//@import "config/bootstrap_variables";
+@import "config/bootstrap_variables";
 
 // External libraries
+@import "bootstrap/scss/bootstrap";
 @import "font-awesome-sprockets";
 @import "font-awesome";
 
@@ -544,28 +547,37 @@ file 'app/views/pages/home.html.erb',
 # Webpacker / Yarn
   ########################################
   run 'rm app/javascript/packs/application.js'
-  run 'yarn add jquery bootstrap popper.js'
-
+  run 'yarn add popper.js jquery bootstrap'
   file 'app/javascript/packs/application.js', <<-JS
-import 'bootstrap/dist/js/bootstrap';
 import "bootstrap";
-  JS
+JS
 
-  file 'app/javascript/packs/bootstrap.scss', <<-CSS
-@import "~bootstrap/scss/bootstrap";
-  CSS
+
+#   file 'app/javascript/packs/application.js', <<-JS
+# import 'bootstrap/dist/js/bootstrap';
+# import "bootstrap";
+#   JS
+
+#   file 'app/javascript/packs/bootstrap.scss', <<-CSS
+# @import "~bootstrap/scss/bootstrap";
+#   CSS
 
   inject_into_file 'config/webpack/environment.js', before: 'module.exports' do
   <<-JS
   // Bootstrap 3 has a dependency over jQuery:
 const webpack = require('webpack')
-  environment.plugins.prepend('Provide',
+
+// Preventing Babel from transpiling NodeModules packages
+environment.loaders.delete('nodeModules');
+// Bootstrap 4 has a dependency over jQuery & Popper.js:
+environment.plugins.prepend('Provide',
   new webpack.ProvidePlugin({
     $: 'jquery',
     jQuery: 'jquery',
     Popper: ['popper.js', 'default']
   })
 )
+
   JS
   end
 
